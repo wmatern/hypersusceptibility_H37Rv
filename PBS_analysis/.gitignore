@@ -1,0 +1,10 @@
+output
+output_back
+tn-seq_data
+pandas_bug_report
+__pycache__
+tpp.cfg
+*.fna
+*.gbff
+transit-mod
+
