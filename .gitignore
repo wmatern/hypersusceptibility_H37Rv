@@ -1,0 +1,12 @@
+output
+__pycache__
+.~*
+*.swp
+*.fasta
+*.fa*
+*.gb
+*.fastq
+*.pyc
+*tpp.cfg
+.ipynb*
+*.Rhistory

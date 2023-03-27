@@ -7,4 +7,5 @@ tpp.cfg
 *.fna
 *.gbff
 transit-mod
+input/Genome
 

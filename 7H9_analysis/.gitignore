@@ -4,4 +4,5 @@ tn-seq_input/*
 pandas_bug_report/*
 __pycache__/*
 tpp.cfg
+input/Genome
 

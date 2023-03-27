@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import pandas as pd 
+import numpy as np
 from hypersus_helper import norm_data_for_JT, estimate_lfc, summary_data
 
 #import matplotlib.pyplot as plt
@@ -16,8 +17,11 @@ from hypersus_helper import norm_data_for_JT, estimate_lfc, summary_data
 
 #parameters
 run_calcs = True
-out_fold = 'output/'
+out_fold = 'output/hypersus_analysis/'
 pseudocount = 4
+
+#Seed the random number generator - ensure consistent results each time
+np.random.seed(525600)
 
 def main():
     #Initializations
@@ -59,7 +63,7 @@ def read_in_tn_data():
     #Read in and organized data. Return a dataframe containing organized raw read count data.
 
     #Read in csv files of counts
-    csv1 = '/home/will/baderlab/Projects/Tnseq_Mtb/my_Tnseq/Results/7H9_Mtb_Tnseq/Hypersusceptibility_Analysis/tn-seq_input/2018-09-15_TPP.csv'
+    csv1 = 'output/fastq_back.csv'
     
     full_df = pd.read_csv(csv1,dtype={'regulatory_class':str,'bound_moiety':str})
     annot_df = full_df.iloc[:,0:6].rename(columns={'unique_identifier (locus_tag or record_id_start_end_strand)':'uid'})
@@ -71,9 +75,10 @@ def read_in_tn_data():
     annot_df.index = mindex
     #full_df.to_csv(out_fold+'hypersus_testing.csv')
 
-    labels_df = pd.read_excel("/home/will/baderlab/Projects/Tnseq_Mtb/my_Tnseq/Results/7H9_Mtb_Tnseq/Hypersusceptibility_Analysis/tn-seq_input/TnPrep_Labels_7H9.xls",nrows=18)
-    labels_df = labels_df[['Sample Description','TnPrepLabel']]
-    labels_df = labels_df.rename(columns={'Sample Description':'ID','TnPrepLabel':'PrepLabel'})
+    #labels_df = pd.read_excel("tn-seq_input/TnPrep_Labels_7H9.xls",nrows=18)
+    labels_df = pd.read_csv("input/Sample_Labels.csv")
+    labels_df = labels_df[['Sample Description','SRA Accession Number']]
+    labels_df = labels_df.rename(columns={'Sample Description':'ID','SRA Accession Number':'PrepLabel'})
 
     #Read in data and rename for ease of reference
     samp_column_names = list()
