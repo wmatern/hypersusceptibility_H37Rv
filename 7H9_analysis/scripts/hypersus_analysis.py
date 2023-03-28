@@ -21,7 +21,7 @@ out_fold = 'output/hypersus_analysis/'
 pseudocount = 4
 
 #Seed the random number generator - ensure consistent results each time
-np.random.seed(525600)
+np.random.seed(0)
 
 def main():
     #Initializations
