@@ -8,7 +8,7 @@ from hypersus_helper import norm_data_for_JT, estimate_lfc, summary_data
 #parameters
 plots_on = True
 run_calcs = True
-out_fold = 'output/'
+out_fold = 'output/hypersus_analysis/'
 pseudocount = 4
 
 def main():
@@ -47,36 +47,35 @@ def main():
         treatment = ['ND','H+++']
         #merged_df = summary_data_R(norm_7d_df,lg2_mmfc_7d_df,treatment,N_perm)
         merged_df = summary_data(norm_7d_df,lfc_7d_df,treatment)
-        merged_df = uid_df.merge(merged_df,how='left',on='uid')
+        merged_df = uid_df.merge(merged_df,how='left',on='uid').drop(['ND'],axis=1)
         merged_df.to_csv(out_fold+'summary_7d_INH.csv')
 
         treatment = ['ND','R+','R++','R+++']
         #merged_df = summary_data_R(norm_7d_df,lg2_mmfc_7d_df,treatment,N_perm)
         merged_df = summary_data(norm_7d_df,lfc_7d_df,treatment)
-        merged_df = uid_df.merge(merged_df,how='left',on='uid')
+        merged_df = uid_df.merge(merged_df,how='left',on='uid').drop(['ND'],axis=1)
         merged_df.to_csv(out_fold+'summary_7d_RMP.csv')
 
         #Using 14d time point
         treatment = ['ND','H+++']
         #merged_df = summary_data_R(norm_14d_df,lg2_mmfc_14d_df,treatment,N_perm)
         merged_df = summary_data(norm_14d_df,lfc_14d_df,treatment)
-        merged_df = uid_df.merge(merged_df,how='left',on='uid')
+        merged_df = uid_df.merge(merged_df,how='left',on='uid').drop(['ND'],axis=1)
         merged_df.to_csv(out_fold+'summary_14d_INH.csv')
 
         treatment = ['ND','R+','R++','R+++']
         #merged_df = summary_data_R(norm_14d_df,lg2_mmfc_14d_df,treatment,N_perm)
         merged_df = summary_data(norm_14d_df,lfc_14d_df,treatment)
-        merged_df = uid_df.merge(merged_df,how='left',on='uid')
+        merged_df = uid_df.merge(merged_df,how='left',on='uid').drop(['ND'],axis=1)
         merged_df.to_csv(out_fold+'summary_14d_RMP.csv')
 
 def read_in_tn_data():
     #Read in and organized data. Return a dataframe containing organized raw read count data.
 
     #Read in csv files of counts
-    csv1 = '/home/will/baderlab/Projects/Tnseq_Mtb/my_Tnseq/Results/PBS_Mtb_Tnseq/Analysis/tn-seq_data/2018-09-15_TPP_Run105.csv'
-    csv2 = '/home/will/baderlab/Projects/Tnseq_Mtb/my_Tnseq/Results/PBS_Mtb_Tnseq/Analysis/tn-seq_data/2018-09-15_TPP_Run107.csv'
+    csv1 = 'output/fastq_back.csv'
     
-    full_df = pd.concat([pd.read_csv(csv1,dtype={'regulatory_class':str,'bound_moiety':str}), pd.read_csv(csv2,dtype={'regulatory_class':str,'bound_moiety':str}).iloc[:,6:]],sort=False,axis=1)
+    full_df = pd.read_csv(csv1,dtype={'regulatory_class':str,'bound_moiety':str})
     annot_df = full_df.iloc[:,0:6].rename(columns={'unique_identifier (locus_tag or record_id_start_end_strand)':'uid'})
 
     mindex = pd.MultiIndex.from_arrays([annot_df['contig'],annot_df['insertion_site']])
@@ -86,17 +85,17 @@ def read_in_tn_data():
     annot_df.index = mindex
     #full_df.to_csv(out_fold+'hypersus_testing.csv')
 
-    labels_df = pd.read_excel("/home/will/baderlab/Projects/Tnseq_Mtb/my_Tnseq/Results/PBS_Mtb_Tnseq/Analysis/tn-seq_data/TnPrep_Label_identities_and_Barcodes.xls",nrows=36)
-    labels_df = labels_df[['Sample Description','TnPrepLabel']]
-    labels_df = labels_df.rename(columns={'Sample Description':'ID','TnPrepLabel':'PrepLabel'})
+    labels_df = pd.read_csv("input/Sample_Labels.csv")
+    labels_df = labels_df[['Sample Description','SRA Accession Number']]
+    labels_df = labels_df.rename(columns={'Sample Description':'ID','SRA Accession Number':'PrepLabel'})
 
     #Read in data and rename for ease of reference
     samp_column_names = list()
     tuples = list()
     for i in range(len(labels_df["ID"])):
-        old_name = 'read_count (TnSeq_Wil_' + labels_df["PrepLabel"][i] + ')'
+        old_name = 'read_count (' + str(labels_df["PrepLabel"][i]) + ')'
         if labels_df["ID"][i][0:3] == 'InA':
-            tuples.append(('-14d','InA'))
+            tuples.append(('-17d','InA'))
         elif labels_df["ID"][i][0:3] == 'InB':
             tuples.append(('0d','InB'))
         elif (labels_df["ID"][i][0:2] == 'd7'):

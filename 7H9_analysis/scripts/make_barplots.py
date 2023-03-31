@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-in_fold = 'output/'
+in_fold = 'output/hypersus_analysis/'
 out_fold = 'output/'
 padj_thresh = 0.05
 lfc_thresh = 0.5
