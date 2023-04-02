@@ -76,7 +76,7 @@ def read_in_tn_data():
     #Read in and organized data. Return a dataframe containing organized raw read count data.
 
     #Read in csv files of counts
-    csv1 = 'output/fastq_back.csv'
+    csv1 = 'output/fastq.csv'
     
     full_df = pd.read_csv(csv1,dtype={'regulatory_class':str,'bound_moiety':str})
     annot_df = full_df.iloc[:,0:6].rename(columns={'unique_identifier (locus_tag or record_id_start_end_strand)':'uid'})

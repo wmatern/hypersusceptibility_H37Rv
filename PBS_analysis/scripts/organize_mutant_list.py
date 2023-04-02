@@ -12,12 +12,12 @@ n_f = 0 #Global for setting figure numbers
 def main():
     global n_f
 
-    out_fold = 'output/'
+    out_fold = 'output/hypersus_analysis/'
     padj_thresh = 0.05
     lfc_thresh = 0.5
     label_thresh = 100.0
     save_plots = False
-    run_plots = True
+    run_plots = False
 
     #INH
     fname1 = out_fold+'summary_7d_INH.csv'
