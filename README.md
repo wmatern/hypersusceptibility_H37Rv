@@ -22,7 +22,7 @@ The expected genome file names in order to run this workflow are:
 There are two workflows used to analyze the two different experiments: 7H9_analysis (rich medium) and PBS_analysis (nutrient starvation). You'll need to run the appropriate Jupyter notebook inside the respective folder to reproduce our results.
 
 ### Step 1: Download workflow
-If you simply want to run these two workflows, download and extract the [latest release](https://github.com/).
+If you simply want to run these two workflows, download and extract the code [![DOI](https://zenodo.org/badge/619446173.svg)](https://zenodo.org/badge/latestdoi/619446173)).
 
 ### Step 2: Install conda environment
 conda env create -f environment.yml
